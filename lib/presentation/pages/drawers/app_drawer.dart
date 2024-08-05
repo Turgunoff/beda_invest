@@ -61,7 +61,7 @@ class AppDrawer extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (isLoggedIn)
+                if (user != null)
                   ListTile(
                     leading: Icon(
                       Icons.account_circle_outlined,
@@ -119,22 +119,22 @@ class AppDrawer extends StatelessWidget {
                       // ); // Close the drawer after navigation.
                     },
                   ),
-                // ListTile(
-                //   leading: Icon(
-                //     Icons.settings_outlined,
-                //     size: 30.0,
-                //     color: Theme.of(context).iconTheme.color,
-                //   ),
-                //   title: Text(
-                //     AppLocalizations.of(context)!.settings,
-                //     style: TextStyle(fontSize: 20.0),
-                //   ),
-                //   onTap: () {
-                //     // Implement the logic to navigate to the settings page.
-                //     Navigator.pop(
-                //         context); // Close the drawer after navigation.
-                //   },
-                // ),
+                ListTile(
+                  leading: Icon(
+                    Icons.settings_outlined,
+                    size: 30.0,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  title: Text(
+                    AppLocalizations.of(context)!.settings,
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  onTap: () {
+                    // Implement the logic to navigate to the settings page.
+                    Navigator.pop(
+                        context); // Close the drawer after navigation.
+                  },
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.language,
@@ -157,107 +157,33 @@ class AppDrawer extends StatelessWidget {
                     ); // Close the drawer after navigation.
                   },
                 ),
-                !isLoggedIn
-                    ? ListTile(
-                        leading: Icon(
-                          Icons.login,
-                          size: 30.0,
-                          color: Theme.of(context).iconTheme.color,
+                ListTile(
+                  leading: Icon(
+                    user == null ? Icons.login : Icons.logout,
+                    size: 30.0,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  title: Text(
+                    user == null
+                        ? AppLocalizations.of(context)!.login
+                        : AppLocalizations.of(context)!.logout,
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  onTap: () async {
+                    // Implement the logic to navigate to the login page.
+                    Future.delayed(Duration.zero, () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MyPhone(),
                         ),
-                        title: Text(
-                          AppLocalizations.of(context)!.login,
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                        onTap: () async {
-                          // Implement the logic to navigate to the login page.
-                          Future.delayed(Duration.zero, () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MyPhone(),
-                              ),
-                            );
-                          }); // Close the drawer after navigation.
-                        },
-                      )
-                    : ListTile(
-                        leading: Icon(
-                          Icons.logout,
-                          size: 30.0,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                        title: Text(
-                          AppLocalizations.of(context)!.logout,
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                        onTap: () {
-                          FirebaseAuth.instance.signOut();
-                          // Implement the logic to navigate to the login page.
-                          Future.delayed(Duration.zero, () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyApp(
-                                        settingsController: settingsController,
-                                      )),
-                            );
-                          });
-                        },
-                      ),
-
-                const SizedBox(
-                  height: 65.0,
-                )
+                      );
+                    }); // Close the drawer after navigation.
+                  },
+                ),
               ],
             ),
           ),
-          // Column(
-          //   children: [
-          //     Padding(
-          //       padding: EdgeInsets.symmetric(vertical: 8.0),
-          //       child: TextButton(
-          //         style: TextButton.styleFrom(// Change the button text color
-          //         ),
-          //         child: Text(
-          //           "Uzbek",
-          //           style: TextStyle(fontSize: 18.0),
-          //         ),
-          //         onPressed: () => MyApp.of(context)
-          //             .setLocale(Locale.fromSubtags(languageCode: 'uz')),
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: EdgeInsets.symmetric(vertical: 8.0),
-          //       child: TextButton(
-          //         style: TextButton.styleFrom(// Change the button text color
-          //         ),
-          //         child: Text(
-          //           "English",
-          //           style: TextStyle(fontSize: 18.0),
-          //         ),
-          //         onPressed: () => MyApp.of(context)
-          //             .setLocale(Locale.fromSubtags(languageCode: 'en')),
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: EdgeInsets.symmetric(vertical: 8.0),
-          //       child: TextButton(
-          //         style: TextButton.styleFrom(// Change the button text color
-          //         ),
-          //         child: Text(
-          //           "Russian",
-          //           style: TextStyle(fontSize: 18.0),
-          //         ),
-          //         onPressed: () => MyApp.of(context)
-          //             .setLocale(Locale.fromSubtags(languageCode: 'ru')),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-
-          SizedBox(
-            height: 40.0,
-          )
         ],
       ),
     );

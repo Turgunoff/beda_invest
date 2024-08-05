@@ -149,107 +149,104 @@ class _MyPhoneState extends State<MyPhone> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 25),
             alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Theme.of(context).primaryColor == Color(0xff1c1b1f)
-                        ? 'assets/images/logo_black_big.png'
-                        : 'assets/images/logo.png',
-                    width: 150,
-                    height: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Theme.of(context).primaryColor == Color(0xff1c1b1f)
+                      ? 'assets/images/logo_black_big.png'
+                      : 'assets/images/logo.png',
+                  width: 150,
+                  height: 150,
+                ),
+                SizedBox(height: 25),
+                Text(
+                  appLocalizations?.phoneVerification ?? "Phone Verification",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  SizedBox(height: 25),
-                  Text(
-                    appLocalizations?.phoneVerification ?? "Phone Verification",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 30),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: 45,
-                          child: TextField(
-                            controller: countryController,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "|",
-                          style: TextStyle(fontSize: 33, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: phoneController,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: appLocalizations?.phone ?? "Phone",
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(appLocalizations?.bySigningIntoOurPlatform ??
-                          "By signing into our platform, you accept our"),
-                      GestureDetector(
-                        onTap: () {
-                          _launchURL(); // Function to launch the URL
-                        },
-                        child: Text(
-                          appLocalizations?.termsOfService ??
-                              "Terms of Service.",
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                              decoration: TextDecoration.underline),
-                          textAlign: TextAlign.center,
+                      SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 45,
+                        child: TextField(
+                          controller: countryController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
+                      Text(
+                        "|",
+                        style: TextStyle(fontSize: 33, color: Colors.grey),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: phoneController,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: appLocalizations?.phone ?? "Phone",
+                          ),
+                        ),
+                      )
                     ],
                   ),
-                  SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 45,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: _codeSending
-                          ? null
-                          : () async {
-                              await _verifyPhoneNumber();
-                            },
+                ),
+                SizedBox(height: 10),
+                Column(
+                  children: [
+                    Text(appLocalizations?.bySigningIntoOurPlatform ??
+                        "By signing into our platform, you accept our"),
+                    GestureDetector(
+                      onTap: () {
+                        _launchURL(); // Function to launch the URL
+                      },
                       child: Text(
-                          appLocalizations?.sendTheCode ?? "Send the code"),
+                        appLocalizations?.termsOfService ?? "Terms of Service.",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            decoration: TextDecoration.underline),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  )
-                ],
-              ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: _codeSending
+                        ? null
+                        : () async {
+                            await _verifyPhoneNumber();
+                          },
+                    child:
+                        Text(appLocalizations?.sendTheCode ?? "Send the code"),
+                  ),
+                )
+              ],
             ),
           ),
           // Loader widget
